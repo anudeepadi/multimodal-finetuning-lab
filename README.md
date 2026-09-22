@@ -1,61 +1,39 @@
-# 🚀 Multimodal Foundation Model Training Framework
+# Multimodal Fine-tuning Lab
 
-<div align=\"center\">
+Research code for adapting vision-language models with LoRA, including CLIP/LLaVA modules, data processing, evaluation helpers and distributed-training components.
 
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.1+-red.svg)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Code Style](https://img.shields.io/badge/Code%20Style-Black-black.svg)](https://black.readthedocs.io/)
+**Status:** experimental components from March 2026. The repository describes fine-tuning existing models; it does not demonstrate training a foundation model from scratch or a production deployment.
 
-*Production-ready multimodal vision-language model fine-tuning with distributed training capabilities*
+## A concrete starting point
 
-[Features](#-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Results](#-results)
+The checked-in [training configuration](configs/training_config.yaml) selects `openai/clip-vit-base-patch32`, LoRA rank 16/alpha 32 and COCO-format data. The [CLIP module](src/models/clip_lora.py) loads the base model and processor, applies PEFT adapters and exposes text/image encoding and similarity methods.
 
-</div>
+```bash
+git clone https://github.com/anudeepadi/multimodal-finetuning-lab.git
+cd multimodal-finetuning-lab
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
 
----
+Use the [data exploration](notebooks/01_data_exploration.ipynb), [training](notebooks/02_model_training.ipynb) and [results visualization](notebooks/03_results_visualization.ipynb) notebooks as the experiment walkthrough. Review their paths and configuration before running. Model weights and datasets are downloaded separately, and GPU/distributed requirements depend on the chosen model and configuration. No training run was executed during this documentation refresh.
 
-## 📖 Overview
+## Components
 
-This project provides a comprehensive, production-ready framework for fine-tuning multimodal vision-language models including CLIP and LLaVA. Built with Stanford-level engineering practices, it demonstrates expertise in distributed training, parameter-efficient fine-tuning, MLOps pipelines, and comprehensive evaluation.
+| Directory | Contents |
+|---|---|
+| `src/models/` | CLIP/LLaVA adaptation and quantization helpers |
+| `src/data/` | Dataset loading and preprocessing |
+| `src/training/` | Accelerate/distributed trainer components and configuration |
+| `src/evaluation/` | Metrics and benchmark helpers |
+| `mlops/` | Airflow, MLflow and cloud configuration examples |
+| `open-source-contribution/` | Draft contribution proposal and experimental code |
 
-### 🎯 Key Highlights
+## What needs validation
 
-- **Parameter-Efficient Fine-tuning**: LoRA/QLoRA implementations achieving 95%+ performance with <1% trainable parameters
-- **Distributed Training**: Multi-GPU support with DeepSpeed, FSDP, and HuggingFace Accelerate  
-- **Production MLOps**: Complete pipeline with MLflow tracking, Airflow orchestration, and Docker deployment
-- **Comprehensive Evaluation**: Vision-language metrics including BLEU, CIDEr, CLIP-Score, and retrieval metrics
-- **Cloud-Ready Deployment**: AWS SageMaker and GCP Vertex AI configurations
+- No source-backed hardware/run/results record accompanies the earlier efficiency percentages. They have been removed from the project introduction.
+- The cloud configuration files are examples, not evidence of deployed services.
+- The contribution folder is a proposal, not an accepted upstream contribution. Three Python files there currently contain literal escaped-newline text that fails parsing; they require repair before execution.
+- An experiment should save model revision, dataset version/split, seed, hardware, package versions, command and raw metrics. Compare full fine-tuning or frozen embeddings against LoRA under the same evaluation conditions.
 
-## ✨ Features
-
-### 🧠 Model Architectures
-- **CLIP with LoRA**: Parameter-efficient adaptation for vision-language retrieval
-- **LLaVA Fine-tuning**: Instruction-following multimodal conversations  
-- **Quantization Support**: 4-bit/8-bit quantization with AWQ and GPTQ
-- **Custom Neural Extensions**: EEG/fMRI data processing capabilities
-
-### ⚡ Distributed Training
-- **Multi-GPU Training**: DeepSpeed ZeRO, FSDP, and DDP support
-- **Memory Optimization**: Gradient checkpointing, mixed precision (FP16/BF16)
-- **Scalable Infrastructure**: Automatic device placement and load balancing
-- **Performance Monitoring**: Real-time metrics and resource utilization tracking
-
-### 🔧 MLOps Pipeline
-- **Experiment Tracking**: MLflow integration with automatic logging
-- **Workflow Orchestration**: Airflow DAGs for end-to-end training pipelines
-- **Model Registry**: Automated model versioning and deployment
-- **Monitoring & Alerting**: Performance drift detection and notifications
-
-### 📊 Evaluation & Benchmarking
-- **Vision-Language Metrics**: BLEU, CIDEr, ROUGE-L, METEOR scores
-- **Retrieval Evaluation**: Recall@K, Mean Average Precision, MRR
-- **Performance Benchmarking**: Throughput, memory usage, inference latency
-- **Comprehensive Analysis**: Jupyter notebooks with publication-ready visualizations
-
-## 🚀 Installation
-
-### Prerequisites
-- Python 3.9+
-- CUDA 11.8+ (for GPU training)
-- Docker (optional, for containerized deployment)
+The main training modules are components to wire together; there is no verified one-command end-to-end training claim here.

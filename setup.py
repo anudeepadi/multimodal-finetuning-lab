@@ -12,12 +12,10 @@ requirements = Path("requirements.txt").read_text().strip().split("\n")
 setup(
     name="multimodal-foundation-model",
     version="1.0.0",
-    description="Production-ready multimodal vision-language model fine-tuning framework",
+    description="Experimental vision-language fine-tuning components and LoRA research",
     long_description=README,
     long_description_content_type="text/markdown",
-    author="Your Name",
-    author_email="your.email@example.com",
-    url="https://github.com/yourusername/multimodal-foundation-model",
+    url="https://github.com/anudeepadi/multimodal-finetuning-lab",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     python_requires=">=3.9",
@@ -58,9 +56,8 @@ setup(
     ],
     keywords="multimodal, vision-language, CLIP, LLaVA, LoRA, distributed-training, MLOps",
     project_urls={
-        "Bug Reports": "https://github.com/yourusername/multimodal-foundation-model/issues",
-        "Source": "https://github.com/yourusername/multimodal-foundation-model",
-        "Documentation": "https://multimodal-foundation-model.readthedocs.io/",
+        "Bug Reports": "https://github.com/anudeepadi/multimodal-finetuning-lab/issues",
+        "Source": "https://github.com/anudeepadi/multimodal-finetuning-lab",
     },
     entry_points={
         "console_scripts": [

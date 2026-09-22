@@ -1,3 +1,5 @@
+> Draft proposal, not an accepted upstream contribution. Examples and efficiency figures are unverified; the Python files in this folder currently need syntax repair. See the root README for the current experimental scope.
+
 # 🌟 Open Source Contribution: Enhanced LoRA Utilities for HuggingFace PEFT
 
 This directory contains a proposed contribution to the [HuggingFace PEFT](https://github.com/huggingface/peft) library, demonstrating community engagement and advanced parameter-efficient fine-tuning techniques.
